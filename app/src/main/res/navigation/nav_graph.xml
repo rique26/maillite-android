@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.rique.maillite.features.splash.presentation.SplashFragment"
+        android:label="Splash"
+        tools:layout="@layout/fragment_splash">
+
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_splashFragment_to_inboxFragment"
+            app:destination="@id/inboxFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- STUB TEMPORÁRIO: será substituído pela implementação completa da tela de Login -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.rique.maillite.features.auth.presentation.login.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login" />
+
+    <!-- STUB TEMPORÁRIO: será substituído pela implementação completa da tela de Inbox -->
+    <fragment
+        android:id="@+id/inboxFragment"
+        android:name="com.rique.maillite.features.messages.presentation.inbox.InboxFragment"
+        android:label="Inbox"
+        tools:layout="@layout/fragment_inbox" />
+
+</navigation>
