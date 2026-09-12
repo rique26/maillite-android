@@ -154,6 +154,11 @@ class InboxFragment : Fragment() {
 
     private fun toVisibility(condition: Boolean): Int = if (condition) View.VISIBLE else View.GONE
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshFromSource()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding.recyclerMessagesInbox.adapter = null

@@ -63,7 +63,6 @@
             app:destination="@id/composeMessageFragment" />
     </fragment>
 
-    <!-- STUB TEMPORÁRIO: será substituído pela implementação completa da tela de Detalhe da Mensagem -->
     <fragment
         android:id="@+id/messageDetailFragment"
         android:name="com.rique.maillite.features.messages.presentation.detail.MessageDetailFragment"
@@ -75,7 +74,6 @@
             app:argType="long" />
     </fragment>
 
-    <!-- STUB TEMPORÁRIO: será substituído pela implementação completa da tela de Compor Mensagem -->
     <fragment
         android:id="@+id/composeMessageFragment"
         android:name="com.rique.maillite.features.messages.presentation.compose.ComposeMessageFragment"

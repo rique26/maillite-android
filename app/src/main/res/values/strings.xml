@@ -24,5 +24,12 @@
     <string name="inbox_delete_undo_message">Mensagem \"%1$s\" excluída</string>
     <string name="inbox_delete_undo_action">Desfazer</string>
 
-    <string name="message_detail_placeholder">Detalhe da mensagem #%1$d (placeholder)</string>
+    <string name="message_detail_delete_button">Excluir mensagem</string>
+    <string name="message_detail_deleted_message">Mensagem excluída</string>
+
+    <string name="compose_hint_recipient">Destinatário</string>
+    <string name="compose_hint_subject">Assunto</string>
+    <string name="compose_hint_body">Mensagem</string>
+    <string name="compose_button_send">Enviar</string>
+    <string name="compose_message_success">Mensagem enviada!</string>
 </resources>

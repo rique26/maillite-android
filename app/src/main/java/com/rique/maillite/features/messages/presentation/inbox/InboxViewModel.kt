@@ -1,32 +1,29 @@
 package com.rique.maillite.features.messages.presentation.inbox
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rique.maillite.features.messages.data.fake.FakeMessagesDataSource
 import com.rique.maillite.features.messages.domain.model.Message
-import com.rique.maillite.features.users.domain.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
-class InboxViewModel @Inject constructor() : ViewModel() {
+class InboxViewModel @Inject constructor(
+    private val messagesDataSource: FakeMessagesDataSource
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow<InboxUiState>(InboxUiState.Loading)
     val uiState: StateFlow<InboxUiState> = _uiState.asStateFlow()
 
-    // TODO: substituir por dados reais vindos do MessageRepository/GetInboxUseCase
-    // (GET /v1/messages/inbox?page=&size=&sort=sentAt,desc) quando a Data layer existir.
-    // O tamanho de página (20) já é o mesmo combinado para o backend, pra facilitar a troca depois.
-    @RequiresApi(Build.VERSION_CODES.O)
-    private val allMessages: List<Message> = generateFakeMessages()
-
+    // Ordem estável definida na primeira carga (equivalente ao que um GET /v1/messages/inbox
+    // ordenado por sentAt desc retornaria). A paginação avança sobre essa lista de ids;
+    // o conteúdo de cada mensagem é sempre lido de volta da fonte compartilhada.
+    private var allIdsSorted: List<Long> = emptyList()
     private var currentPage = 0
     private var lastDeleted: Pair<Message, Int>? = null
 
@@ -38,20 +35,44 @@ class InboxViewModel @Inject constructor() : ViewModel() {
         loadFirstPage()
     }
 
+    /**
+     * Rechama isso no onResume() da Fragment: sincroniza as mensagens já carregadas com o
+     * estado atual da fonte compartilhada (uma leitura ou exclusão feita na tela de Detalhe
+     * só aparece aqui quando o usuário volta pra Inbox, sem precisar recarregar do zero).
+     */
+    fun refreshFromSource() {
+        val state = _uiState.value
+        if (state !is InboxUiState.Success) return
+
+        val sourceById = messagesDataSource.messages.value.associateBy { it.id }
+        val updatedMessages = state.messages.mapNotNull { sourceById[it.id] }
+
+        _uiState.value = if (updatedMessages.isEmpty()) {
+            InboxUiState.Empty
+        } else {
+            state.copy(messages = updatedMessages)
+        }
+    }
+
     private fun loadFirstPage() {
         viewModelScope.launch {
             _uiState.value = InboxUiState.Loading
             delay(LOAD_DELAY_MS)
 
+            allIdsSorted = messagesDataSource.messages.value
+                .sortedByDescending { it.sentAt }
+                .map { it.id }
             currentPage = 1
-            val firstPage = allMessages.take(PAGE_SIZE)
+
+            val firstPageIds = allIdsSorted.take(PAGE_SIZE)
+            val firstPage = resolveMessages(firstPageIds)
 
             _uiState.value = if (firstPage.isEmpty()) {
                 InboxUiState.Empty
             } else {
                 InboxUiState.Success(
                     messages = firstPage,
-                    endReached = firstPage.size >= allMessages.size
+                    endReached = firstPageIds.size >= allIdsSorted.size
                 )
             }
         }
@@ -65,14 +86,14 @@ class InboxViewModel @Inject constructor() : ViewModel() {
             _uiState.value = state.copy(isLoadingMore = true)
             delay(LOAD_DELAY_MS)
 
-            val nextChunk = allMessages.drop(currentPage * PAGE_SIZE).take(PAGE_SIZE)
+            val nextChunkIds = allIdsSorted.drop(currentPage * PAGE_SIZE).take(PAGE_SIZE)
             currentPage++
 
-            val updatedMessages = state.messages + nextChunk
+            val updatedMessages = state.messages + resolveMessages(nextChunkIds)
             _uiState.value = InboxUiState.Success(
                 messages = updatedMessages,
                 isLoadingMore = false,
-                endReached = updatedMessages.size >= allMessages.size
+                endReached = updatedMessages.size >= allIdsSorted.size
             )
         }
     }
@@ -85,6 +106,7 @@ class InboxViewModel @Inject constructor() : ViewModel() {
         if (index == -1) return
 
         lastDeleted = message to index
+        messagesDataSource.delete(message.id)
 
         val updatedMessages = state.messages.toMutableList().apply { removeAt(index) }
         _uiState.value = if (updatedMessages.isEmpty()) {
@@ -96,6 +118,7 @@ class InboxViewModel @Inject constructor() : ViewModel() {
 
     fun undoDelete() {
         val (message, index) = lastDeleted ?: return
+        messagesDataSource.restore(message, index)
 
         val current = _uiState.value
         val currentMessages = when (current) {
@@ -115,35 +138,13 @@ class InboxViewModel @Inject constructor() : ViewModel() {
         lastDeleted = null
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun generateFakeMessages(): List<Message> {
-        val currentUser = User(id = 1, name = "Você", email = "voce@mail.com")
-        val senders = listOf(
-            User(id = 2, name = "Ana Souza", email = "ana.souza@mail.com"),
-            User(id = 3, name = "Bruno Lima", email = "bruno.lima@mail.com"),
-            User(id = 4, name = "Carla Mendes", email = "carla.mendes@mail.com"),
-            User(id = 5, name = "Diego Alves", email = "diego.alves@mail.com"),
-            User(id = 6, name = "Fernanda Ribeiro", email = "fernanda.ribeiro@mail.com")
-        )
-
-        return (1..TOTAL_FAKE_MESSAGES).map { index ->
-            val sender = senders[index % senders.size]
-            Message(
-                id = index.toLong(),
-                sender = sender,
-                recipient = currentUser,
-                subject = "Assunto de teste #$index",
-                body = "Corpo completo da mensagem número $index, gerado como dado fake " +
-                        "para validar a camada de apresentação antes da integração com a API.",
-                sentAt = LocalDateTime.now().minusHours(index.toLong()),
-                read = index % 3 == 0
-            )
-        }
+    private fun resolveMessages(ids: List<Long>): List<Message> {
+        val sourceById = messagesDataSource.messages.value.associateBy { it.id }
+        return ids.mapNotNull { sourceById[it] }
     }
 
     private companion object {
         const val LOAD_DELAY_MS = 600L
         const val PAGE_SIZE = 20
-        const val TOTAL_FAKE_MESSAGES = 45
     }
 }
