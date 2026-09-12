@@ -94,7 +94,7 @@ class ComposeMessageFragment : Fragment() {
 
     private fun render(state: ComposeMessageUiState) {
         suggestionsAdapter.submitList(state.suggestions)
-        binding.recyclerSuggestionsComposeMessage.visibility =
+        binding.cardSuggestionsComposeMessage.visibility =
             if (state.suggestions.isNotEmpty()) View.VISIBLE else View.GONE
 
         val isSending = state.sendStatus is SendStatus.Sending

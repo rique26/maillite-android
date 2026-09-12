@@ -1,14 +1,17 @@
 package com.rique.maillite.features.messages.presentation.inbox.adapter
 
+import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.rique.maillite.core.util.AvatarUtil
 import com.rique.maillite.databinding.ItemMessageBinding
 import com.rique.maillite.features.messages.domain.model.Message
 import java.time.format.DateTimeFormatter
@@ -43,6 +46,11 @@ class MessagesAdapter(
             binding.textSubjectItemMessage.setTypeface(null, typeface)
 
             binding.dotUnreadItemMessage.visibility = if (!message.read) View.VISIBLE else View.GONE
+
+            binding.avatarItemMessage.text = AvatarUtil.initialsOf(message.sender.name)
+            binding.avatarItemMessage.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(binding.root.context, AvatarUtil.colorResFor(message.sender.name))
+            )
 
             binding.root.setOnClickListener { onMessageClick(message) }
         }

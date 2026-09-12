@@ -6,16 +6,16 @@
     android:id="@+id/rootComposeMessage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
+        android:padding="@dimen/spacing_md">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_recipient_compose_message"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/compose_hint_recipient"
@@ -31,34 +31,39 @@
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_suggestions_compose_message"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_suggestions_compose_message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="?attr/colorSurfaceContainerHigh"
-            android:elevation="2dp"
-            android:maxHeight="240dp"
+            android:layout_marginTop="@dimen/spacing_xxs"
             android:visibility="gone"
+            app:cardElevation="@dimen/elevation_dropdown"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/til_recipient_compose_message"
-            tools:itemCount="3"
-            tools:listitem="@layout/item_recipient_suggestion"
-            tools:visibility="visible" />
+            tools:visibility="visible">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_suggestions_compose_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="240dp"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_recipient_suggestion" />
+
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_subject_compose_message"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/spacing_sm"
             android:hint="@string/compose_hint_subject"
             app:counterEnabled="true"
             app:counterMaxLength="255"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recycler_suggestions_compose_message">
+            app:layout_constraintTop_toBottomOf="@id/card_suggestions_compose_message">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_subject_compose_message"
@@ -71,10 +76,9 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_body_compose_message"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/spacing_sm"
             android:hint="@string/compose_hint_body"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +97,7 @@
             android:id="@+id/button_send_compose_message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/spacing_md"
             android:text="@string/compose_button_send"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -103,8 +107,8 @@
             android:id="@+id/progress_bar_compose_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:layout_marginBottom="@dimen/spacing_sm"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

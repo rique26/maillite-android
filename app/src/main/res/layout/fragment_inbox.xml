@@ -5,14 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootInbox"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_messages_inbox"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:paddingBottom="88dp"
+        android:paddingBottom="@dimen/spacing_xl"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +37,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="24dp"
+        android:padding="@dimen/spacing_md"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,18 +45,26 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible">
 
+        <ImageView
+            android:layout_width="@dimen/state_icon_size"
+            android:layout_height="@dimen/state_icon_size"
+            android:layout_marginBottom="@dimen/spacing_sm"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_mail_outline_24" />
+
         <TextView
             android:id="@+id/text_empty_title_inbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/inbox_empty_title"
-            android:textAppearance="?attr/textAppearanceTitleMedium" />
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:textColor="?attr/colorOnSurface" />
 
         <TextView
             android:id="@+id/text_empty_subtitle_inbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_xxs"
             android:gravity="center"
             android:text="@string/inbox_empty_subtitle"
             android:textAppearance="?attr/textAppearanceBodyMedium"
@@ -69,7 +78,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="24dp"
+        android:padding="@dimen/spacing_md"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,20 +86,28 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible">
 
+        <ImageView
+            android:layout_width="@dimen/state_icon_size"
+            android:layout_height="@dimen/state_icon_size"
+            android:layout_marginBottom="@dimen/spacing_sm"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_error_outline_24" />
+
         <TextView
             android:id="@+id/text_error_message_inbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurface"
             tools:text="@string/inbox_error_generic" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_retry_inbox"
-            style="@style/Widget.Material3.Button.TonalButton"
+            style="@style/Widget.MailLite.Button.Tonal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/spacing_sm"
             android:text="@string/inbox_retry_button" />
 
     </LinearLayout>
@@ -99,7 +116,7 @@
         android:id="@+id/progress_bar_load_more_inbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="@dimen/spacing_sm"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -110,10 +127,11 @@
         android:id="@+id/fab_compose_inbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/spacing_sm"
         android:contentDescription="@string/inbox_fab_compose_description"
-        android:src="@android:drawable/ic_menu_edit"
+        android:src="@drawable/ic_edit_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="?attr/colorOnPrimaryContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

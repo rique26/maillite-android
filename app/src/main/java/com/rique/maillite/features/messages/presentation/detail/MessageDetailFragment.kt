@@ -1,10 +1,12 @@
 package com.rique.maillite.features.messages.presentation.detail
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -12,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.rique.maillite.R
+import com.rique.maillite.core.util.AvatarUtil
 import com.rique.maillite.databinding.FragmentMessageDetailBinding
 import com.rique.maillite.features.messages.domain.model.Message
 import dagger.hilt.android.AndroidEntryPoint
@@ -91,6 +94,11 @@ class MessageDetailFragment : Fragment() {
         binding.textSentAtMessageDetail.text = message.sentAt.format(dateTimeFormatter)
         binding.textSubjectMessageDetail.text = message.subject
         binding.textBodyMessageDetail.text = message.body
+
+        binding.avatarMessageDetail.text = AvatarUtil.initialsOf(message.sender.name)
+        binding.avatarMessageDetail.backgroundTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(requireContext(), AvatarUtil.colorResFor(message.sender.name))
+        )
     }
 
     private fun toVisibility(condition: Boolean): Int = if (condition) View.VISIBLE else View.GONE

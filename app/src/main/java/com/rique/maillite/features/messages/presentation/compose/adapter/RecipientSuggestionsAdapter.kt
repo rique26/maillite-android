@@ -1,10 +1,13 @@
 package com.rique.maillite.features.messages.presentation.compose.adapter
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.rique.maillite.core.util.AvatarUtil
 import com.rique.maillite.databinding.ItemRecipientSuggestionBinding
 import com.rique.maillite.features.users.domain.model.User
 
@@ -31,6 +34,12 @@ class RecipientSuggestionsAdapter(
         fun bind(user: User) {
             binding.textNameItemRecipientSuggestion.text = user.name
             binding.textEmailItemRecipientSuggestion.text = user.email
+
+            binding.avatarItemRecipientSuggestion.text = AvatarUtil.initialsOf(user.name)
+            binding.avatarItemRecipientSuggestion.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(binding.root.context, AvatarUtil.colorResFor(user.name))
+            )
+
             binding.root.setOnClickListener { onSuggestionClick(user) }
         }
     }

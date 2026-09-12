@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootMessageDetail"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface">
 
     <ProgressBar
         android:id="@+id/progress_bar_message_detail"
@@ -21,8 +22,9 @@
         android:id="@+id/text_error_message_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="24dp"
+        android:padding="@dimen/spacing_md"
         android:textAppearance="?attr/textAppearanceBodyMedium"
+        android:textColor="?attr/colorOnSurface"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,27 +48,36 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="24dp">
+            android:padding="@dimen/spacing_md">
+
+            <TextView
+                android:id="@+id/avatar_message_detail"
+                style="@style/Widget.MailLite.Avatar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="AS" />
 
             <TextView
                 android:id="@+id/text_sender_name_message_detail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_xs"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="?attr/colorOnSurface"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/avatar_message_detail"
+                app:layout_constraintTop_toTopOf="@id/avatar_message_detail"
                 tools:text="Ana Souza" />
 
             <TextView
                 android:id="@+id/text_sender_email_message_detail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/spacing_xxs"
                 android:textAppearance="?attr/textAppearanceBodySmall"
                 android:textColor="?attr/colorOnSurfaceVariant"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/text_sender_name_message_detail"
                 app:layout_constraintTop_toBottomOf="@id/text_sender_name_message_detail"
                 tools:text="ana.souza@mail.com" />
 
@@ -74,11 +85,11 @@
                 android:id="@+id/text_sent_at_message_detail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/spacing_xxs"
                 android:textAppearance="?attr/textAppearanceBodySmall"
                 android:textColor="?attr/colorOnSurfaceVariant"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/text_sender_name_message_detail"
                 app:layout_constraintTop_toBottomOf="@id/text_sender_email_message_detail"
                 tools:text="10/09/2026 às 14:00" />
 
@@ -86,18 +97,19 @@
                 android:id="@+id/divider_message_detail"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:background="?attr/colorOutlineVariant"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_sent_at_message_detail" />
+                app:layout_constraintTop_toBottomOf="@id/avatar_message_detail" />
 
             <TextView
                 android:id="@+id/text_subject_message_detail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:textAppearance="?attr/textAppearanceHeadlineSmall"
+                android:textColor="?attr/colorOnSurface"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider_message_detail"
@@ -107,8 +119,9 @@
                 android:id="@+id/text_body_message_detail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:textAppearance="?attr/textAppearanceBodyLarge"
+                android:textColor="?attr/colorOnSurface"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_subject_message_detail"
@@ -116,12 +129,12 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_delete_message_detail"
-                style="@style/Widget.Material3.Button.TonalButton"
+                style="@style/Widget.MailLite.Button.Tonal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="@dimen/spacing_lg"
                 android:text="@string/message_detail_delete_button"
-                app:icon="@android:drawable/ic_menu_delete"
+                app:icon="@drawable/ic_delete_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_body_message_detail" />

@@ -6,34 +6,45 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:minHeight="@dimen/touch_target_min"
+    android:paddingStart="@dimen/spacing_sm"
+    android:paddingEnd="@dimen/spacing_sm"
+    android:paddingTop="@dimen/spacing_xs"
+    android:paddingBottom="@dimen/spacing_xs">
+
+    <TextView
+        android:id="@+id/avatar_item_recipient_suggestion"
+        style="@style/Widget.MailLite.Avatar.Small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="AS" />
 
     <TextView
         android:id="@+id/text_name_item_recipient_suggestion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_xs"
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="?attr/textAppearanceBodyLarge"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/avatar_item_recipient_suggestion"
+        app:layout_constraintTop_toTopOf="@id/avatar_item_recipient_suggestion"
         tools:text="Ana Souza" />
 
     <TextView
         android:id="@+id/text_email_item_recipient_suggestion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginStart="@dimen/spacing_xs"
+        android:layout_marginTop="@dimen/spacing_xxs"
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="?attr/textAppearanceBodySmall"
         android:textColor="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/text_name_item_recipient_suggestion"
         app:layout_constraintTop_toBottomOf="@id/text_name_item_recipient_suggestion"
         tools:text="ana.souza@mail.com" />
 

@@ -1,11 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Cores neutras fixas -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="yellow_100">#FFF9C4</color>
-    <color name="yellow_500">#FFEB3B</color>
-    <color name="yellow_900">#F57F17</color>
+    <!-- ===================== Primary (amarelo) ===================== -->
+    <color name="color_primary">#FFEB3B</color>
+    <color name="color_on_primary">#1C1B00</color>
+    <color name="color_primary_container">#FFF9C4</color>
+    <color name="color_on_primary_container">#4E4300</color>
 
-    <color name="surface_container_light">#F3F3F3</color>
-    <color name="surface_container_high_light">#ECE6F0</color>
+    <!-- ===================== Secondary (dourado neutro, análogo ao amarelo) ===================== -->
+    <color name="color_secondary">#6B5F00</color>
+    <color name="color_on_secondary">#FFFFFF</color>
+    <color name="color_secondary_container">#F5E6A3</color>
+    <color name="color_on_secondary_container">#211B00</color>
+
+    <!-- ===================== Tertiary (âmbar/terracota — contraste quente) ===================== -->
+    <color name="color_tertiary">#8B5000</color>
+    <color name="color_on_tertiary">#FFFFFF</color>
+    <color name="color_tertiary_container">#FFDCB8</color>
+    <color name="color_on_tertiary_container">#2C1600</color>
+
+    <!-- ===================== Error (baseline M3) ===================== -->
+    <color name="color_error">#BA1A1A</color>
+    <color name="color_on_error">#FFFFFF</color>
+    <color name="color_error_container">#FFDAD6</color>
+    <color name="color_on_error_container">#410002</color>
+
+    <!-- ===================== Neutros / Superfície ===================== -->
+    <color name="color_background">#FFFBF5</color>
+    <color name="color_on_background">#1D1C16</color>
+    <color name="color_surface">#FFFBF5</color>
+    <color name="color_on_surface">#1D1C16</color>
+    <color name="color_surface_variant">#E8E2D0</color>
+    <color name="color_on_surface_variant">#4B4739</color>
+    <color name="color_outline">#7C7767</color>
+    <color name="color_outline_variant">#CDC8B4</color>
+
+    <color name="color_surface_container_lowest">#FFFFFF</color>
+    <color name="color_surface_container_low">#F8F3E8</color>
+    <color name="color_surface_container">#F2EDDF</color>
+    <color name="color_surface_container_high">#ECE7D9</color>
+    <color name="color_surface_container_highest">#E6E1D3</color>
+
+    <!-- ===================== Paleta fixa de avatares (mesma em light/dark) ===================== -->
+    <color name="avatar_palette_1">#6750A4</color>
+    <color name="avatar_palette_2">#386A20</color>
+    <color name="avatar_palette_3">#984061</color>
+    <color name="avatar_palette_4">#3C6660</color>
+    <color name="avatar_palette_5">#8B5000</color>
+    <color name="avatar_palette_6">#345E9E</color>
 </resources>

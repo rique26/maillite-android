@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Escala de espaçamento (grid de 8dp) -->
+    <dimen name="spacing_xxs">4dp</dimen>
+    <dimen name="spacing_xs">8dp</dimen>
+    <dimen name="spacing_sm">16dp</dimen>
+    <dimen name="spacing_md">24dp</dimen>
+    <dimen name="spacing_lg">32dp</dimen>
+    <dimen name="spacing_xl">48dp</dimen>
+
+    <!-- Ergonomia -->
+    <dimen name="touch_target_min">48dp</dimen>
+
+    <!-- Forma -->
+    <dimen name="corner_radius_medium">12dp</dimen>
+    <dimen name="corner_radius_small">8dp</dimen>
+
+    <!-- Avatares -->
+    <dimen name="avatar_size_default">40dp</dimen>
+    <dimen name="avatar_size_small">32dp</dimen>
+    <dimen name="avatar_text_size_default">16sp</dimen>
+    <dimen name="avatar_text_size_small">13sp</dimen>
+
+    <!-- Estados de tela (empty/error) -->
+    <dimen name="state_icon_size">96dp</dimen>
+
+    <!-- Elevação -->
+    <dimen name="elevation_dropdown">3dp</dimen>
+</resources>

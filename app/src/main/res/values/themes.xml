@@ -1,27 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Base application theme. -->
     <style name="Base.Theme.MailLite" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Cor primária -->
-        <item name="colorPrimary">@color/yellow_500</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <item name="colorPrimaryContainer">@color/yellow_100</item>
-        <item name="colorOnPrimaryContainer">@color/yellow_900</item>
+        <!-- Primary -->
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorOnPrimary">@color/color_on_primary</item>
+        <item name="colorPrimaryContainer">@color/color_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/color_on_primary_container</item>
 
-        <!-- Superfície e fundo das telas -->
-        <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">@color/black</item>
-        <item name="colorSurfaceContainerLow">@color/surface_container_light</item>
-        <item name="colorSurfaceContainer">@color/surface_container_light</item>
-        <item name="colorSurfaceContainerHigh">@color/surface_container_high_light</item>
+        <!-- Secondary -->
+        <item name="colorSecondary">@color/color_secondary</item>
+        <item name="colorOnSecondary">@color/color_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/color_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/color_on_secondary_container</item>
+
+        <!-- Tertiary -->
+        <item name="colorTertiary">@color/color_tertiary</item>
+        <item name="colorOnTertiary">@color/color_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/color_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/color_on_tertiary_container</item>
+
+        <!-- Error -->
+        <item name="colorError">@color/color_error</item>
+        <item name="colorOnError">@color/color_on_error</item>
+        <item name="colorErrorContainer">@color/color_error_container</item>
+        <item name="colorOnErrorContainer">@color/color_on_error_container</item>
+
+        <!-- Background / Surface -->
+        <item name="android:colorBackground">@color/color_background</item>
+        <item name="colorOnBackground">@color/color_on_background</item>
+        <item name="colorSurface">@color/color_surface</item>
+        <item name="colorOnSurface">@color/color_on_surface</item>
+        <item name="colorSurfaceVariant">@color/color_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/color_on_surface_variant</item>
+        <item name="colorOutline">@color/color_outline</item>
+        <item name="colorOutlineVariant">@color/color_outline_variant</item>
+
+        <item name="colorSurfaceContainerLowest">@color/color_surface_container_lowest</item>
+        <item name="colorSurfaceContainerLow">@color/color_surface_container_low</item>
+        <item name="colorSurfaceContainer">@color/color_surface_container</item>
+        <item name="colorSurfaceContainerHigh">@color/color_surface_container_high</item>
+        <item name="colorSurfaceContainerHighest">@color/color_surface_container_highest</item>
+
+        <!-- Estilos globais -->
+        <item name="textInputStyle">@style/Widget.MailLite.TextInputLayout.OutlinedBox</item>
+        <item name="materialButtonStyle">@style/Widget.MailLite.Button</item>
+        <item name="materialCardViewStyle">@style/Widget.MailLite.CardView.Elevated</item>
     </style>
 
+    <!-- Overlay do Toolbar -->
     <style name="ThemeOverlay.MailLite.Toolbar" parent="ThemeOverlay.Material3.Toolbar.Surface">
-        <item name="titleTextColor">@color/black</item>
-        <item name="subtitleTextColor">@color/black</item>
-        <item name="colorControlNormal">@color/black</item>
-        <item name="colorOnSurface">@color/black</item>
-        <item name="colorOnSurfaceVariant">@color/black</item>
+        <item name="titleTextColor">?attr/colorOnPrimary</item>
+        <item name="subtitleTextColor">?attr/colorOnPrimary</item>
+        <item name="colorControlNormal">?attr/colorOnPrimary</item>
+        <item name="colorOnSurface">?attr/colorOnPrimary</item>
+        <item name="colorOnSurfaceVariant">?attr/colorOnPrimary</item>
     </style>
 
     <style name="Theme.MailLite" parent="Base.Theme.MailLite" />
+
 </resources>
