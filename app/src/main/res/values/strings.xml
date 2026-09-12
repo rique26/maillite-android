@@ -15,4 +15,14 @@
     <string name="register_button">Cadastrar</string>
     <string name="register_login_link">Já tem conta? Entrar</string>
     <string name="register_success_message">Cadastro realizado! Faça login.</string>
+
+    <string name="inbox_empty_title">Nenhuma mensagem ainda</string>
+    <string name="inbox_empty_subtitle">Quando alguém te enviar uma mensagem, ela aparece aqui.</string>
+    <string name="inbox_error_generic">Não foi possível carregar suas mensagens.</string>
+    <string name="inbox_retry_button">Tentar novamente</string>
+    <string name="inbox_fab_compose_description">Nova mensagem</string>
+    <string name="inbox_delete_undo_message">Mensagem \"%1$s\" excluída</string>
+    <string name="inbox_delete_undo_action">Desfazer</string>
+
+    <string name="message_detail_placeholder">Detalhe da mensagem #%1$d (placeholder)</string>
 </resources>

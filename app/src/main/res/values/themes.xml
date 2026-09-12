@@ -1,8 +1,26 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.MailLite" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Cor primária -->
+        <item name="colorPrimary">@color/yellow_500</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimaryContainer">@color/yellow_100</item>
+        <item name="colorOnPrimaryContainer">@color/yellow_900</item>
+
+        <!-- Superfície e fundo das telas -->
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="colorSurfaceContainerLow">@color/surface_container_light</item>
+        <item name="colorSurfaceContainer">@color/surface_container_light</item>
+        <item name="colorSurfaceContainerHigh">@color/surface_container_high_light</item>
+    </style>
+
+    <style name="ThemeOverlay.MailLite.Toolbar" parent="ThemeOverlay.Material3.Toolbar.Surface">
+        <item name="titleTextColor">@color/black</item>
+        <item name="subtitleTextColor">@color/black</item>
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="colorOnSurfaceVariant">@color/black</item>
     </style>
 
     <style name="Theme.MailLite" parent="Base.Theme.MailLite" />
