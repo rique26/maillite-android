@@ -12,10 +12,6 @@ import com.google.firebase.messaging.RemoteMessage
 import com.rique.maillite.MainActivity
 import com.rique.maillite.R
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -24,27 +20,24 @@ class MailLiteFirebaseMessagingService : FirebaseMessagingService() {
     @Inject
     lateinit var fcmTokenSynchronizer: FcmTokenSynchronizer
 
-    // Service não tem um escopo de coroutine próprio como ViewModel/Fragment — cria um
-    // vinculado ao próprio ciclo de vida do Service, cancelado em onDestroy().
-    private val serviceScope = CoroutineScope(Dispatchers.IO)
+    @Inject
+    lateinit var pushMessageParser: PushMessageParser
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        serviceScope.launch { fcmTokenSynchronizer.sync() }
+        fcmTokenSynchronizer.sync()
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
 
-        val title = message.notification?.title ?: getString(R.string.fcm_default_notification_title)
-        val body = message.notification?.body.orEmpty()
+        val content = pushMessageParser.parse(
+            title = message.notification?.title,
+            body = message.notification?.body,
+            defaultTitle = getString(R.string.fcm_default_notification_title)
+        )
 
-        showNotification(title, body)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        serviceScope.cancel()
+        showNotification(content.title, content.body)
     }
 
     private fun showNotification(title: String, body: String) {

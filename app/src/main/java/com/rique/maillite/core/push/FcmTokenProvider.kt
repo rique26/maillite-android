@@ -1,5 +1,6 @@
 package com.rique.maillite.core.push
 
+import android.util.Log
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
@@ -13,11 +14,15 @@ import kotlin.coroutines.resume
  * (chamado após login e quando a Splash confirma sessão já válida).
  */
 @Singleton
-class FcmTokenProvider @Inject constructor() {
+class FcmTokenProvider @Inject constructor(
+    private val firebaseMessaging: FirebaseMessaging
+) {
 
     suspend fun getCurrentToken(): String? = suspendCancellableCoroutine { continuation ->
-        FirebaseMessaging.getInstance().token
-            .addOnSuccessListener { token -> continuation.resume(token) }
+        firebaseMessaging.token
+            .addOnSuccessListener { token ->
+                Log.d("MailLite-FCM", "token: $token")
+                continuation.resume(token) }
             .addOnFailureListener { continuation.resume(null) }
     }
 }
