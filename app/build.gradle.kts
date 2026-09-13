@@ -66,6 +66,10 @@ dependencies {
     implementation(libs.retrofit.converter.gson)
     implementation(libs.okhttp.logging.interceptor)
 
+    // DataStore
+    implementation(libs.androidx.datastore.preferences)
+
+
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
