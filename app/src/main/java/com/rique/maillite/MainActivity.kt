@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<MaterialToolbar>(R.id.mainToolbar)
         val appBarConfiguration = AppBarConfiguration(navController.graph)
 
+        setSupportActionBar(toolbar)
         toolbar.setupWithNavController(navController, appBarConfiguration)
 
         // Alterna a visibilidade do AppBarLayout dependendo da tela atual
