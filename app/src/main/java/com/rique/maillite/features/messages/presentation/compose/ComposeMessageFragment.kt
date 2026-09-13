@@ -47,6 +47,17 @@ class ComposeMessageFragment : Fragment() {
         setupSuggestionsList()
         setupListeners()
         observeUiState()
+        observeSearchError()
+    }
+
+    private fun observeSearchError() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.searchError.collect { message ->
+                    Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun setupSuggestionsList() {

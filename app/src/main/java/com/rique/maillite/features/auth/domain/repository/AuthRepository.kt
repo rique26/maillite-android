@@ -12,4 +12,8 @@ interface AuthRepository {
 
     /** Usado pela Splash pra decidir a navegação inicial. */
     suspend fun hasValidSession(): Boolean
+
+    /** Limpa a sessão local (token). Não existe endpoint de logout no backend — é stateless
+     *  via JWT, então "deslogar" é só esquecer o token localmente. */
+    suspend fun logout()
 }

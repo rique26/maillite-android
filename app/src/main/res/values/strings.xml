@@ -32,4 +32,10 @@
     <string name="compose_hint_body">Mensagem</string>
     <string name="compose_button_send">Enviar</string>
     <string name="compose_message_success">Mensagem enviada!</string>
+
+    <string name="fcm_channel_name">Novas mensagens</string>
+    <string name="fcm_channel_description">Notificações de novas mensagens recebidas no MailLite</string>
+    <string name="fcm_default_notification_title">Nova mensagem</string>
+
+    <string name="inbox_logout_action">Sair</string>
 </resources>

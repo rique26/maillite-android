@@ -36,4 +36,8 @@ class AuthRepositoryImpl @Inject constructor(
         val token = tokenDataStore.getToken()
         return !token.isNullOrBlank() && !JwtUtil.isExpired(token)
     }
+
+    override suspend fun logout() {
+        tokenDataStore.clearToken()
+    }
 }

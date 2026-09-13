@@ -2,8 +2,10 @@ package com.rique.maillite.features.auth.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rique.maillite.core.domain.util.Result
+import com.rique.maillite.core.push.FcmTokenSynchronizer
+import com.rique.maillite.features.auth.domain.usecase.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,35 +13,28 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor() : ViewModel() {
+class LoginViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase,
+    private val fcmTokenSynchronizer: FcmTokenSynchronizer
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow<LoginUiState>(LoginUiState.Idle)
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
     fun login(email: String, password: String) {
-        if (email.isBlank() || password.isBlank()) {
-            _uiState.value = LoginUiState.Error("Preencha e-mail e senha")
-            return
-        }
-
+        // Validação de campo em branco já é feita dentro do LoginUseCase
         viewModelScope.launch {
             _uiState.value = LoginUiState.Loading
 
-            // TODO: substituir pela chamada real ao AuthRepository/LoginUseCase quando a
-            // camada de Data existir (POST /v1/auth/login). Por enquanto, fake fixo.
-            delay(LOGIN_DELAY_MS)
-
-            val loginSucceeded = true
-
-            _uiState.value = if (loginSucceeded) {
-                LoginUiState.Success
-            } else {
-                LoginUiState.Error("E-mail ou senha inválidos")
+            when (val result = loginUseCase(email, password)) {
+                is Result.Success -> {
+                    _uiState.value = LoginUiState.Success
+                    // Fire-and-forget: registrar o token de push (RF08) nunca deve atrasar
+                    // ou bloquear a navegação pós-login.
+                    fcmTokenSynchronizer.sync()
+                }
+                is Result.Error -> _uiState.value = LoginUiState.Error(result.message)
             }
         }
-    }
-
-    private companion object {
-        const val LOGIN_DELAY_MS = 800L
     }
 }

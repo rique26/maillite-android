@@ -2,8 +2,13 @@ package com.rique.maillite.features.messages.presentation.inbox
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -18,6 +23,7 @@ import com.rique.maillite.R
 import com.rique.maillite.core.extensions.applyWindowInsets
 import com.rique.maillite.databinding.FragmentInboxBinding
 import com.rique.maillite.features.messages.domain.model.Message
+import com.rique.maillite.features.messages.presentation.MessageDetailResult
 import com.rique.maillite.features.messages.presentation.inbox.adapter.MessagesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -51,7 +57,64 @@ class InboxFragment : Fragment() {
         setupRecyclerView()
         setupSwipeToDelete()
         setupListeners()
+        setupMenu()
+        setupDetailResultListener()
         observeUiState()
+        observeLoadMoreError()
+        observeLoggedOut()
+    }
+
+    private fun setupMenu() {
+        (requireActivity() as MenuHost).addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.menu_inbox, menu)
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    if (menuItem.itemId == R.id.action_logout) {
+                        viewModel.logout()
+                        return true
+                    }
+                    return false
+                }
+            },
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
+    }
+
+    private fun observeLoggedOut() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loggedOut.collect {
+                    findNavController().navigate(R.id.action_inboxFragment_to_loginFragment)
+                }
+            }
+        }
+    }
+
+    private fun setupDetailResultListener() {
+        parentFragmentManager.setFragmentResultListener(
+            MessageDetailResult.REQUEST_KEY,
+            viewLifecycleOwner
+        ) { _, bundle ->
+            val messageId = bundle.getLong(MessageDetailResult.KEY_MESSAGE_ID)
+            when (bundle.getString(MessageDetailResult.KEY_ACTION)) {
+                MessageDetailResult.ACTION_READ -> viewModel.markLocalAsRead(messageId)
+                MessageDetailResult.ACTION_DELETED -> viewModel.removeLocal(messageId)
+            }
+        }
+    }
+
+    private fun observeLoadMoreError() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loadMoreError.collect { message ->
+                    Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun setupRecyclerView() {
@@ -100,8 +163,20 @@ class InboxFragment : Fragment() {
             binding.root,
             getString(R.string.inbox_delete_undo_message, message.subject),
             Snackbar.LENGTH_LONG
-        ).setAction(R.string.inbox_delete_undo_action) {
-            viewModel.undoDelete()
+        ).apply {
+            setAction(R.string.inbox_delete_undo_action) {
+                viewModel.undoDelete()
+            }
+            addCallback(object : Snackbar.Callback() {
+                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                    // Só confirma a exclusão de verdade se NÃO foi o botão "Desfazer" que fechou
+                    // a Snackbar (timeout, swipe, nova Snackbar substituindo etc. contam como
+                    // "não desfez a tempo").
+                    if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                        viewModel.confirmPendingDelete()
+                    }
+                }
+            })
         }.show()
     }
 
@@ -153,11 +228,6 @@ class InboxFragment : Fragment() {
     }
 
     private fun toVisibility(condition: Boolean): Int = if (condition) View.VISIBLE else View.GONE
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.refreshFromSource()
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

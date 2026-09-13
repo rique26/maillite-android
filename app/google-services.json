@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "833643021010",
+    "project_id": "maillite-9c5b5",
+    "storage_bucket": "maillite-9c5b5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833643021010:android:a7febc94e3af4d2957a30b",
+        "android_client_info": {
+          "package_name": "com.rique.maillite"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCws_QZndCLI8LkOaI3j201H4xpwG4T80U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

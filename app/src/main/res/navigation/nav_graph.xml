@@ -41,7 +41,6 @@
             app:popUpToInclusive="true" />
     </fragment>
 
-    <!-- STUB TEMPORÁRIO: será substituído pela implementação completa da tela de Registro -->
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.rique.maillite.features.auth.presentation.register.RegisterFragment"
@@ -61,6 +60,12 @@
         <action
             android:id="@+id/action_inboxFragment_to_composeMessageFragment"
             app:destination="@id/composeMessageFragment" />
+
+        <action
+            android:id="@+id/action_inboxFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/inboxFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
